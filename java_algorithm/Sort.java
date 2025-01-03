@@ -1,3 +1,4 @@
+package java_algorithm;
 import java.util.Scanner;
 
 public class Sort {
