@@ -1,10 +1,13 @@
 my_list = [1, 3, 4, 6, 2]
-print(my_list)
+target = my_list[4]
 
-# 3番目の要素を1番目に挿入する場合
-from_idx = 3
-to_idx = 1
+# 操作対象の要素より小さい値を持つ要素が見つかるまで一つ右側にずらす
+j = 3 #要素の手前から処理を行う
+while 0 <= j and target < my_list[j]:
+    my_list[j + 1] = my_list[j]
+    print(my_list)
+    j -= 1
 
-tmp = my_list.pop(from_idx)
-my_list.insert(to_idx, tmp)
+# ずらし終わったら開いたところに操作対象要素を設定
+my_list[j + 1] = target
 print(my_list)
