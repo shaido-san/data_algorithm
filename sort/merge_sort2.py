@@ -40,7 +40,7 @@ def merge(my_list, start_idx, mid_idx, end_idx):
         idx += 1
         right_idx += 1
 
-data = [1, 2, 0, 3]
+data = [1, 2, 0, 3, 8, 4, 5, 8, 1, 9, 10]
 n = len(data)
 start_idx = 0
 end_idx = len(data) - 1
