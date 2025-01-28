@@ -24,7 +24,7 @@ class Hashtable:
         hash_key = hash_func(key) % self.size
         while hash_key < self.size:
             node = self.data[hash_key]
-            if node is None:
+            if node is None or node.key == '-':
                 self.data[hash_key] = Node(key, value)
                 return
             
@@ -35,11 +35,34 @@ class Hashtable:
     
     def get(self, key):
         hash_key = hash_func(key) % self.size
-        return self.data[hash_key]
+        while hash_key < self.size:
+            node = self.data[hash_key]
+            if node is None:
+                print("データがみつかりませんでした")
+                return
+            
+            elif node.key == key:
+                return node.value
+            
+            # ハッシュ値の再計算
+            hash_key += 1
+        
+        print("データが見つかりませんでした")
     
-    def delete(self, key):
+    def delete(self, key,):
         hash_key = hash_func(key) % self.size
-        self.data[hash_key] = None
+        while hash_key < self.size:
+            node = self.data[hash_key]
+            if node is None:
+                print("データが見つかりませんでした")
+                return
+            
+            elif node.key == key:
+                self.data[hash_key] = Node('-', None)
+                return
+            
+            # ハッシュ値の再計算
+            hash_key += 1
     
     def __str__(self):
         result = ""
@@ -49,9 +72,23 @@ class Hashtable:
         return result
 
 map = Hashtable()
-map.set("Tanaka", "tanaka@example.com")
-map.set("Ootani", "ootani@example.com")
-print(map)
+map.set("suzuki", "suzuki@example.com")
+# map.set("ootani", "ootani@example.com")
+map.set("nakata", "nakata@example.com")
+map.set("tanaka", "tanaka@example.com")
+# map.set("toudou", "toudou@example.com")
 
-mail = map.get("Tanaka")
-print("mail:", mail)
+print(map)
+map.delete("nakata")
+print(map)
+val = map.get("tanaka")
+print(val)
+map.set("kanata", "kanata@example.com")
+print(map)
+# print(map.get("toudou"))
+# print(map.get("ootani"))
+# print(map.get("tanaka"))
+# print(map.get("kanata"))
+# print(map.get("nakata"))
+# mail = map.get("Tanaka")
+# print("mail:", mail)
