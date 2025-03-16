@@ -1,3 +1,5 @@
+from bst_dump import dump
+
 class Node:
     def __init__(self, key, value, is_left=None):
         self.key = key
@@ -66,17 +68,86 @@ class BsTree:
         else:
             # 指定したキーが現在のノードのキーより大きい場合、右側を再起的にたどる
             return self._get_node(node.right, key)
+        
+    def delete(self, key):
+        node = self.root
+        self._del_node(node, key)
 
+    def _del_node(self, node, key):
+        if node is None:
+            print("指定したキーのノードは見つかりませんでした")
+            return node
+        
+        # ルートから指定したキーのノードまで再起的にたどる
+        if key < node.key:
+            # キーがノードより小さい場合、左部分木でノードを探索
+            node.left = self._del_node(node.left, key)
+            if node.left:
+                node.left.is_left = True
+            return node
+        if key > node.key:
+            # キーがノードより大きい場合、右部分木でノードを検索
+            node.right = self._del_node(node.right, key)
+            if node.right:
+                node.right.is_left = False
+            return node
+        
+        # 子がないもしくは左右一方のみに子がある場合、後継ノードとしてその子を返す
+        if node.right is None:
+            if node == self.root:
+                # 対象ノードがルートの場合は自身を子に付け替え
+                self.root = node.left
+            return node.left
+        if node.left is None:
+            if node == self.root:
+                # 対象ノードがルートの場合は自身を子に付け替え
+                self.root = node.right
+            return node.right
+        
+        # 両側に子がある場合、左部分木の最大ノードを後継ノードとする
+        successor = node.left
+        while successor.right:
+            successor = successor.right
+        
+        # 後継ノードの情報をコピー
+        node.key = successor.key
+        node.value = successor.right
+
+        # 後継ノードの情報をコピー
+        node.key = successor.key
+        node.value = successor.value
+
+        # 削除対象ノードの左部分木から後継ノードを削除する
+        node.left = self._del_node(node.left, successor.key)
+        if node.left:
+            node.left.is_left = True
+        return node
+    
 def main():
     bst = BsTree()
-    bst.add(5, "Yamada")
-    bst.add(3, "Tanaka")
     bst.add(8, "Suzuki")
-    bst.add(7, "Sato")
+    bst.add(3, "Tanaka")
     bst.add(9, "Takahashi")
-    bst.add(1, "Watanabe")
-
-    node = bst.get(7)
-    print(node)
+    bst.add(2, "Yamashita")
+    bst.add(6, "Sato")
+    bst.add(1, "Ito")
+    bst.add(5, "Watanabe")
+    dump(bst)
+    bst.delete(8)
+    dump(bst)
 
 main()
+    
+# def main():
+#     bst = BsTree()
+#     bst.add(5, "Yamada")
+#     bst.add(3, "Tanaka")
+#     bst.add(8, "Suzuki")
+#     bst.add(7, "Sato")
+#     bst.add(9, "Takahashi")
+#     bst.add(1, "Watanabe")
+
+#     node = bst.get(7)
+#     print(node)
+
+# main()
