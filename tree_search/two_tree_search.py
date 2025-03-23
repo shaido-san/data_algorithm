@@ -123,6 +123,8 @@ class BsTree:
             node.left.is_left = True
         return node
     
+    
+    
 def main():
     bst = BsTree()
     bst.add(8, "Suzuki")
