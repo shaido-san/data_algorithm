@@ -27,3 +27,20 @@ for i in range(N):
 # 結果を表示
 for r in result:
     print(r)
+
+result2 = [[0, 0, 0, 0],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0]
+          ]
+
+for i in range(N):
+    # 行方向にループ
+    for j in range(N):
+        # 列方向にループ
+        result2[i][j] += x[i][j] + result[i][j]
+
+# 結果を表示
+print()
+for r in result2:
+    print(r)
