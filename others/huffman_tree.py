@@ -64,8 +64,6 @@ def aggregate_frequency(text):
     
     return sorted(freq.items(), key=lambda item: item[1], reverse=True)
 
-freq_list = aggregate_frequency("BDDAAAABACEBBBAA")
-
 def build_huffman_tree(text):
 
     # 頻度のリスト
