@@ -18,7 +18,6 @@ class LRUCache:
         if len(self.cache) > self.capacity:
             self.cache.popitem(last=False)  # 一番古いの捨てる
 
-# 実行例
 cache = LRUCache(2)
 cache.put(1, 1)
 cache.put(2, 2)
